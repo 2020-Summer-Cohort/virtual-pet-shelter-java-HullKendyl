@@ -10,13 +10,13 @@ public class VirtualPetShelterApp {
         //Create Objects
 
         VirtualPet pet1 = new VirtualPet("Doodle",
-                "Tabby Cat. He stands out with his orange coat and is a feisty mouser.", 25, 25, 25);
+                "Tabby Cat. He stands out with his orange coat and is a feisty mouser.", 50 , 50, 50);
         VirtualPet pet2 = new VirtualPet("Bart",
-                "Bearded Dragon. He is quite lazy and really enjoys his heat lamp.", 25, 25, 25);
+                "Bearded Dragon. He is quite lazy and really enjoys his heat lamp.", 50, 50, 50);
         VirtualPet pet3 = new VirtualPet("Frodo",
-                "Corgi. He is a silly dog that cannot control the booty wiggles.", 25, 25, 25);
+                "Corgi. He is a silly dog that cannot control the booty wiggles.", 50, 50, 50);
         VirtualPet pet4 = new VirtualPet("Gilbert",
-                "Teddy Bear Hamster. He is timid but loves cuddles.", 25, 25, 25);
+                "Teddy Bear Hamster. He is timid but loves cuddles.", 50, 50, 50);
 
         //Create shelterAnimals (petMap) to interact with all pets at one time.
 
@@ -32,43 +32,11 @@ public class VirtualPetShelterApp {
 
         // Begin Game Loop
 
-        while (true) {
-
+        while (winConditions(shelterAnimals)) {
 
             // Current Stats
 
             showAnimalCurrentNeedsStatus(shelterAnimals);
-
-            // Win Conditions
-            //
-            // idea? for (VirtualPet petToDisplay: shelter.retrieveAllPets()) {
-            //            System.out.println(petToDisplay.getName() + "\t" + "|" + petToDisplay.getHunger() + "\t"  + "\t" + "|" + petToDisplay.getThirst() + "\t" + "\t" + "|"
-            //                + petToDisplay.getBoredom());
-//
-//            if (shelterAnimals.getHunger() <= 0) {
-//                System.out.println("\n" + "Unfortunately, the Hunger level has reached 0. " + petName + " is starving and has been taken by animal control. You Lose!");
-//                break;
-//            }
-//            if (pet.getThirst() <= 0) {
-//                System.out.println("Unfortunately, the Thirst level has reached 0." + petName + " is severely dehydrated and has been taken by animal control. You Lose!");
-//                break;
-//            }
-//            if (pet.getEnergy() <= 0) {
-//                System.out.println("Unfortunately, the Energy level has reached 0." + petName + " is sleep deprived and has passed out. You Lose!");
-//                break;
-//            }
-//            if (pet.getBoredom() <= 0) {
-//                System.out.println("Unfortunately, the Boredom level has reached 0." + petName + " is neglected and has been taken by animal control. You Lose!");
-//                break;
-//            }
-//            if (pet.getLove() <= 0) {
-//                System.out.println("Unfortunately, the Love level has reached 0." + petName + " is neglected and has been taken by animal control. You Lose!");
-//                break;
-//            }
-//            if (pet.getHunger() >= 50 || pet.getThirst() >= 50 || pet.getBoredom() >= 50 || pet.getEnergy() >= 50 || pet.getLove() >= 50){
-//                System.out.println("Congratulations! " + petName + " has reached a maximum level of 50." + "\n" + "Great job taking care of your VirtualPet!");
-//                break;
-//            }
 
             // Player Selection
 
@@ -112,15 +80,7 @@ public class VirtualPetShelterApp {
                     continue;
                 }
             }else if (playerSelection == 4) {
-                System.out.println("Which animal would you like to adopt?");
-                for (VirtualPet pet:shelterAnimals.retrieveAllPets()) {
-                    System.out.println(pet.getName() + " - " + pet.getDescription());
-                }
-                String adoptedAnimalName = scanner.nextLine();
-                if (shelterAnimals.retrievePetNames().contains(adoptedAnimalName)){
-                    shelterAnimals.petMap.remove(adoptedAnimalName);
-                }
-                System.out.println("Yay! Congratulations on finding " + adoptedAnimalName + " a new home.");
+                shelterAnimals.adopt();
             }else if (playerSelection == 5) {
                 System.out.println("In order to admit an animal, please provide the following information as it is requested:");
                 System.out.println("Animal Name:");
@@ -129,7 +89,7 @@ public class VirtualPetShelterApp {
                 String admittedAnimalDescription = scanner.nextLine();
                 System.out.println("Thank you. " + admittedAnimalName + " is now under the care of DAS.");
                 Random randomNumber = new Random();
-                shelterAnimals.addAnimal(new VirtualPet(admittedAnimalName, admittedAnimalDescription, randomNumber.nextInt(21), randomNumber.nextInt(21), randomNumber.nextInt(21)));
+                shelterAnimals.addAnimal(new VirtualPet(admittedAnimalName, admittedAnimalDescription, randomNumber.nextInt(50), randomNumber.nextInt(50), randomNumber.nextInt(50)));
             } else if (playerSelection == 6){
                 System.out.println("Thank you for playing. See you later!");
                 break;
@@ -154,6 +114,19 @@ public class VirtualPetShelterApp {
         System.out.println(pet3.getName() + " is a " + pet3.getDescription() + "\n");
         System.out.println(pet4.getName() + " is a " + pet4.getDescription() + "\n");
         System.out.println("Let's check out the statuses of their current needs.");
+    }
+
+    private static boolean winConditions(VirtualPetShelter shelter) {
+
+        for (VirtualPet pet:shelter.petMap.values()) {
+        if (pet.getBoredom() <= 0 || pet.getHunger() <= 0 || pet.getThirst() <= 0) {
+            System.out.println(pet.getName() + " has died! You lose.");
+            return false;}
+        if (pet.getBoredom() >= 100 || pet.getHunger() >= 100 || pet.getThirst() >= 100){
+            System.out.println(pet.getName() + " current needs have been met. Congratulations! You Win!");
+            return false;}
+        }
+        return true;
     }
 
     public static void showAnimalCurrentNeedsStatus(VirtualPetShelter shelter){

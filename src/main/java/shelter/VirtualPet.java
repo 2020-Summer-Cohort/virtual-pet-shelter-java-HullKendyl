@@ -51,6 +51,7 @@ public class VirtualPet {
 
     public void actionFeedAnimals(){
         hunger += 10;
+        thirst -= 2;
     }
 
     public void actionGiveWaterToAnimals(){
@@ -59,12 +60,13 @@ public class VirtualPet {
 
     public void actionPlayWithAnAnimal(){
         boredom += 10;
+        hunger -= 2;
+        thirst -= 2;
     }
 
     void tick() {
-        hunger = hunger -= 2;
-        thirst = thirst -= 2;
-        boredom = boredom -= 2;
-        //add other stats;
+        hunger = hunger -= 5;
+        thirst = thirst -= 5;
+        boredom = boredom -= 5;
     }
 }

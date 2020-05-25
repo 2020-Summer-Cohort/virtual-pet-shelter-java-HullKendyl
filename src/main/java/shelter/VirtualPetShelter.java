@@ -1,9 +1,6 @@
 package shelter;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class VirtualPetShelter {
 
@@ -11,10 +8,6 @@ public class VirtualPetShelter {
 
         public void addAnimal(VirtualPet pet) {
             petMap.put(pet.getName(),pet);
-        }
-
-        public void removeAnimal(VirtualPet pet){
-            petMap.remove(pet.getName(),pet);
         }
 
         public void actionFeedAllAnimals(){
@@ -49,4 +42,20 @@ public class VirtualPetShelter {
                 petToTick.tick();
             }
         }
+
+    public void adopt() {
+        System.out.println("Which animal would you like to adopt?");
+        for (VirtualPet pet:retrieveAllPets()) {
+            System.out.println(pet.getName() + " - " + pet.getDescription());
+        }
+        Scanner scanner = new Scanner(System.in);
+        String adoptedAnimalName = scanner.nextLine();
+            if (petMap.containsKey(adoptedAnimalName)) {
+                petMap.remove(adoptedAnimalName);
+                System.out.println("Yay! Congratulations on finding " + adoptedAnimalName + " a new home.");
+            } else {
+             System.out.println("Sorry that animal does not exist. Note: User input is case sensitive.");
+            }
+
+    }
 }
