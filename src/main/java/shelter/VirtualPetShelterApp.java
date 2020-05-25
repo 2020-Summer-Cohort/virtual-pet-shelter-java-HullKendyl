@@ -40,13 +40,7 @@ public class VirtualPetShelterApp {
 
             // Player Selection
 
-            System.out.println("\n" + "What would you like to do?");
-            System.out.println("1. Feed the animals");
-            System.out.println("2. Give the animals water");
-            System.out.println("3. Play with an animal");
-            System.out.println("4. Adopt an animal");
-            System.out.println("5. Admit an animal");
-            System.out.println("6: Quit");
+            playerOptions();
 
             //use scanner to read player responses
 
@@ -138,5 +132,16 @@ public class VirtualPetShelterApp {
                 + petToDisplay.getBoredom());
         }
     }
+
+    private static void playerOptions() {
+        System.out.println("\n" + "What would you like to do?");
+        System.out.println("1. Feed the animals");
+        System.out.println("2. Give the animals water");
+        System.out.println("3. Play with an animal");
+        System.out.println("4. Adopt an animal");
+        System.out.println("5. Admit an animal");
+        System.out.println("6: Quit");
+    }
+
 }
 
